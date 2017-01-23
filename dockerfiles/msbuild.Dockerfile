@@ -7,7 +7,7 @@ SHELL ["powershell"]
 
 # Note: Get MSBuild 14.
 RUN Invoke-WebRequest "https://download.microsoft.com/download/E/E/D/EEDF18A8-4AED-4CE0-BEBE-70A83094FC5A/BuildTools_Full.exe" -OutFile "$env:TEMP\BuildTools_Full.exe" -UseBasicParsing  
-RUN &  "$env:TEMP\BuildTools_Full.exe" /Silent /Full  
+RUN Start-Process "$env:TEMP\BuildTools_Full.exe" '/Silent /Full' -wait
 # Todo: delete the BuildTools_Full.exe file in this layer
 
 # Note: Add .NET + ASP.NET
@@ -16,11 +16,11 @@ RUN Install-WindowsFeature Web-Asp-Net45
 
 # Note: Add .NET 4.5 SDK (Windows 8)
 RUN Invoke-WebRequest "http://download.microsoft.com/download/F/1/3/F1300C9C-A120-4341-90DF-8A52509B23AC/standalonesdk/sdksetup.exe" -OutFile "$env:TEMP\sdksetup.exe" -UseBasicParsing  
-RUN &  "$env:TEMP\sdksetup.exe" /features + /q
+RUN Start-Process "$env:TEMP\sdksetup.exe" '/features + /q' -wait
 
 # Node: Add Windows 10 SDK
 RUN Invoke-WebRequest "http://download.microsoft.com/download/6/3/B/63BADCE0-F2E6-44BD-B2F9-60F5F073038E/standalonesdk/SDKSETUP.EXE" -OutFile "$env:TEMP\sdksetup2.exe" -UseBasicParsing  
-RUN &  "$env:TEMP\sdksetup2.exe" /features + /q
+RUN Start-Process "$env:TEMP\sdksetup2.exe" '/features + /q' -wait
 
 # Note: Add NuGet
 RUN Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile "C:\windows\nuget.exe" -UseBasicParsing  
