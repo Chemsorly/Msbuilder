@@ -1,0 +1,12 @@
+stages:
+    - build
+
+build:
+  stage: build
+  script:
+    - docker login -u %DOCKERIO_USER% -p %DOCKERIO_PASSWORD%
+    - docker build -t chemsorly/msbuilder:latest -f .\dockerfiles\msbuild.Dockerfile .
+    - docker push chemsorly/msbuilder:latest
+
+after_script:
+    - docker rmi $(docker images -aq) -f
