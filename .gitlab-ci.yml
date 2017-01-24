@@ -9,4 +9,4 @@ build:
     - docker push chemsorly/msbuilder:latest
 
 after_script:
-    - docker rmi $(docker images -aq) -f
+    - 'docker rmi $(docker images -aq) -f'
