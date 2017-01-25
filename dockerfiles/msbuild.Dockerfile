@@ -2,7 +2,7 @@ FROM microsoft/windowsservercore
 MAINTAINER chemso@gmx.de 
 # Original author alexellis2@gmail.com, see http://blog.alexellis.io/3-steps-to-msbuild-with-docker/
 
-# docker push chemsorly/msbuild-builder:4.5
+# docker push chemsorly/msbuilder
 SHELL ["powershell"]
 
 # Note: Get MSBuild 14.
