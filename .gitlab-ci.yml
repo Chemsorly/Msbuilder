@@ -3,6 +3,8 @@ stages:
 
 build:
   stage: build
+  only:
+    - master
   script:
 #    - docker login -u %DOCKERIO_USER% -p %DOCKERIO_PASSWORD%
     - docker build -t chemsorly/msbuilder:latest -f .\dockerfiles\msbuild.Dockerfile .
@@ -10,6 +12,8 @@ build:
     
 build-vsc:
   stage: build
+  only:
+    - master
   script:
 #    - docker login -u %DOCKERIO_USER% -p %DOCKERIO_PASSWORD%
     - docker build -t chemsorly/msbuilder:latest-vsc -f .\dockerfiles\msbuild-vsc.Dockerfile .
