@@ -16,4 +16,4 @@ build-vsc:
     - docker push chemsorly/msbuilder:latest-vsc
 
 after_script:
-    - 'docker rmi $(docker images -aq) -f'
+    - powershell docker rmi $(docker images -aq) -f
