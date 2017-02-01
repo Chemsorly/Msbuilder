@@ -43,32 +43,32 @@ RUN New-ItemProperty -Path HKLM:\Software\Wow6432Node\Microsoft\GenericBootstrap
 RUN Invoke-WebRequest "https://download.microsoft.com/download/F/B/A/FBAB6866-71F8-4A3F-89A4-5BC6AB035C62/vstor_redist.exe" -OutFile "$env:TEMP\vstor_redist.exe" -UseBasicParsing  
 RUN &  "$env:TEMP\vstor_redist.exe" /q
 COPY Files/vsto/ C:/vsto/
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.VisualStudio.Tools.Applications.BuildTasks.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.VisualStudio.Tools.Office.BuildTasks.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.InfoPath.Permission.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.interop.access.dao.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Access.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Excel.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Graph.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.InfoPath.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.InfoPath.SemiTrust.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.InfoPath.Xml.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.MSProject.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.OneNote.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Outlook.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.OutlookViewCtl.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.PowerPoint.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Publisher.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.SharePointDesigner.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.SharePointDesignerPage.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.SmartTag.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Visio.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Visio.SaveAsWeb.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.VisOcx.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Word.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Vbe.Interop.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Vbe.Interop.Forms.dll
-RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Office.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.VisualStudio.Tools.Applications.BuildTasks.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.VisualStudio.Tools.Office.BuildTasks.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.InfoPath.Permission.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.interop.access.dao.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Access.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Excel.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Graph.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.InfoPath.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.InfoPath.SemiTrust.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.InfoPath.Xml.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.MSProject.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.OneNote.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Outlook.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.OutlookViewCtl.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.PowerPoint.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Publisher.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.SharePointDesigner.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.SharePointDesignerPage.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.SmartTag.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Visio.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Visio.SaveAsWeb.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.VisOcx.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Word.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Vbe.Interop.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Vbe.Interop.Forms.dll
+# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Office.dll
 RUN New-Item -ItemType dir 'C:/Program Files (x86)/MSBuild/Microsoft/VisualStudio/v14.0/OfficeTools'
 RUN Copy-Item -Path 'C:/vsto/Microsoft.VisualStudio.Tools.Office.targets' -Destination 'C:/Program Files (x86)/MSBuild/Microsoft/VisualStudio/v14.0/OfficeTools/Microsoft.VisualStudio.Tools.Office.targets'
 RUN Copy-Item -Path 'C:/vsto/Microsoft.VisualStudio.OfficeTools.targets' -Destination 'C:/Program Files (x86)/MSBuild/Microsoft.VisualStudio.OfficeTools.targets'
