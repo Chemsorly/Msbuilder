@@ -32,7 +32,7 @@ RUN Start-Process "C:\windows\nuget.exe" 'Install MSBuild.Microsoft.VisualStudio
 RUN mv 'C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\MSBuild.Microsoft.VisualStudio.Web.targets.12.0.4\tools\VSToolsPath\*' 'C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\'  
 # TODO: new webtargets
 
-# Note: Add ClickOnce Bootstrapper files and location to registry fpr (VS 2015)
+# Note: Add ClickOnce Bootstrapper files and location to registry for (VS 2015)
 COPY Files/Bootstrapper/ C:/Bootstrapper/
 RUN New-Item -Path HKLM:\Software\Wow6432Node\Microsoft\GenericBootstrapper -Name 14.0 -Force
 RUN New-ItemProperty -Path HKLM:\Software\Wow6432Node\Microsoft\GenericBootstrapper\14.0 -Name Path -Value C:\Bootstrapper\ -PropertyType String
@@ -47,33 +47,36 @@ RUN Start-Process "$env:TEMP\vstor_redist.exe" '/q' -wait
 RUN Remove-Item "$env:TEMP\vstor_redist.exe"
 COPY Files/vsto/ C:/vsto/
 
-# Note: Adding too much stuff to the GAC breaks the container during runtime. Add needed office dlls to project source, so they do not get fetched from gac but from source tree instead.
-RUN Start-Process "C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.2 Tools\gacutil.exe" '/i C:/vsto/Microsoft.VisualStudio.Tools.Applications.BuildTasks.dll' -wait
-RUN Start-Process "C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.2 Tools\gacutil.exe" '/i C:/vsto/Microsoft.VisualStudio.Tools.Office.BuildTasks.dll' -wait
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.InfoPath.Permission.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.interop.access.dao.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Access.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Excel.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Graph.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.InfoPath.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.InfoPath.SemiTrust.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.InfoPath.Xml.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.MSProject.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.OneNote.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Outlook.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.OutlookViewCtl.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.PowerPoint.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Publisher.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.SharePointDesigner.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.SharePointDesignerPage.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.SmartTag.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Visio.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Visio.SaveAsWeb.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.VisOcx.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Office.Interop.Word.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Vbe.Interop.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Microsoft.Vbe.Interop.Forms.dll
-# RUN & 'C:\\Program Files (x86)\\Microsoft SDKs\\Windows\\v10.0A\\bin\\NETFX 4.6.2 Tools\\gacutil.exe' /i C:/vsto/Office.dll
+# Note: Adding stuff to GAC can break it during runtime. Running the image on hyperv seems to be the cause
+ENV gacutilloc="C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0a\bin\NETFX 4.6.2 Tools\gacutil.exe"
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.VisualStudio.Tools.Applications.BuildTasks.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.VisualStudio.Tools.Office.BuildTasks.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.VisualStudio.Tools.Applications.Hosting.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.VisualStudio.Tools.Applications.Hosting.resources.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.InfoPath.Permission.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.interop.access.dao.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Access.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Excel.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Graph.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.InfoPath.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.InfoPath.SemiTrust.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.InfoPath.Xml.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.MSProject.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.OneNote.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Outlook.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.OutlookViewCtl.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.PowerPoint.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Publisher.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.SharePointDesigner.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.SharePointDesignerPage.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.SmartTag.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Visio.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Visio.SaveAsWeb.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.VisOcx.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Word.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Vbe.Interop.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Vbe.Interop.Forms.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Office.dll' -wait
 RUN New-Item -ItemType dir 'C:/Program Files (x86)/MSBuild/Microsoft/VisualStudio/v14.0/OfficeTools'
 RUN Copy-Item -Path 'C:/vsto/Microsoft.VisualStudio.Tools.Office.targets' -Destination 'C:/Program Files (x86)/MSBuild/Microsoft/VisualStudio/v14.0/OfficeTools/Microsoft.VisualStudio.Tools.Office.targets'
 RUN Copy-Item -Path 'C:/vsto/Microsoft.VisualStudio.OfficeTools.targets' -Destination 'C:/Program Files (x86)/MSBuild/Microsoft.VisualStudio.OfficeTools.targets'
