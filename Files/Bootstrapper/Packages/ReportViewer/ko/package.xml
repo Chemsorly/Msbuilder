@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) Microsoft.  All rights reserved. -->
+<Package
+  xmlns="http://schemas.microsoft.com/developer/2004/01/bootstrapper"
+  Name="DisplayName"
+  Culture="Culture"
+  LicenseAgreement="eula.rtf"
+>
+
+    <PackageFiles>
+        <PackageFile Name="eula.rtf"/>
+    </PackageFiles>
+
+    <!-- Defines a localizable string table for error messages-->
+    <Strings>
+        <String Name="DisplayName">Microsoft Report Viewer 2014 Runtime</String>
+        <String Name="Culture">ko</String>
+        <String Name="AdminRequired">Microsoft Report Viewer 2014 Runtime 를 설치하려면 관리자 권한이 필요합니다. 관리자에게 문의하십시오.</String>
+        <String Name="DotNetFxRequired">Microsoft Report Viewer 2014 Runtime를 설치하려면 Microsoft .NET Framework 3.5가 필요합니다. 응용 프로그램 공급업체에 문의하십시오.</String>
+        <String Name="WindowsInstallerImproperInstall">Windows Installer의 오류로 Microsoft Report Viewer 2014 Runtime 설치를 계속할 수 없습니다.</String>
+        <String Name="AnotherInstanceRunning">다른 설치 인스턴스가 이미 실행 중입니다. 실행 중인 인스턴스는 이 설치가 진행되기 전에 완료되어야 합니다.</String>
+        <String Name="BetaProductFailure">컴퓨터에서 Microsoft Report Viewer 2014 Runtime 베타 버전이 검색되었습니다. 계속 진행하기 전에 Microsoft Report Viewer 2014 Runtime 의 이전 베타 버전을 제거하십시오.</String>
+        <String Name="GeneralFailure">Microsoft Report Viewer 2014 Runtime 를 설치하려는 중에 오류가 발생했습니다.</String>
+      	<String Name="ReportViewerMsi">http://go.microsoft.com/fwlink/?LinkID=512191</String>    
+    </Strings>
+
+</Package>

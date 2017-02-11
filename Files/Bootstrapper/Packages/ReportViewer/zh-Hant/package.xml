@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright (c) Microsoft.  All rights reserved. -->
+<Package
+  xmlns="http://schemas.microsoft.com/developer/2004/01/bootstrapper"
+  Name="DisplayName"
+  Culture="Culture"
+  LicenseAgreement="eula.rtf"
+>
+
+    <PackageFiles>
+        <PackageFile Name="eula.rtf"/>
+    </PackageFiles>
+
+    <!-- Defines a localizable string table for error messages-->
+    <Strings>
+        <String Name="DisplayName">Microsoft Report Viewer 2014 Runtime</String>
+        <String Name="Culture">zh-Hant</String>
+        <String Name="AdminRequired">必須有系統管理員權限才能安裝 Microsoft Report Viewer 2014 Runtime。請連絡系統管理員。</String>
+        <String Name="DotNetFxRequired">Microsoft Report Viewer 2014 Runtime 的安裝需要 Microsoft .NET Framework 3.5。請連絡您的應用程式廠商。</String>
+        <String Name="WindowsInstallerImproperInstall">由於 Windows Installer 發生錯誤，Microsoft Report Viewer 2014 Runtime 的安裝無法繼續。</String>
+        <String Name="AnotherInstanceRunning">有另一個安裝程式的執行個體已在執行中。必須等待執行中的執行個體完成，這個安裝程式才能繼續。</String>
+        <String Name="BetaProductFailure">在電腦上偵測到 Microsoft Report Viewer 2014 Runtime 的 Beta 版。在繼續之前，請先解除安裝 Microsoft Report Viewer 2014 Runtime 的任何先前 Beta 版。</String>
+        <String Name="GeneralFailure">嘗試安裝 Microsoft Report Viewer 2014 Runtime 時發生失敗。</String>
+      	<String Name="ReportViewerMsi">http://go.microsoft.com/fwlink/?LinkID=512191</String>    
+    </Strings>
+
+</Package>

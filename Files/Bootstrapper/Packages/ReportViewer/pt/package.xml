@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright (c) Microsoft.  All rights reserved. -->
+<Package
+  xmlns="http://schemas.microsoft.com/developer/2004/01/bootstrapper"
+  Name="DisplayName"
+  Culture="Culture"
+  LicenseAgreement="eula.rtf"
+>
+
+    <PackageFiles>
+        <PackageFile Name="eula.rtf"/>
+    </PackageFiles>
+
+    <!-- Defines a localizable string table for error messages-->
+    <Strings>
+        <String Name="DisplayName">Microsoft Report Viewer 2014 Runtime</String>
+        <String Name="Culture">pt-BR</String>
+        <String Name="AdminRequired">Permissões de administrador são necessárias para instalar o Microsoft Report Viewer 2014 Runtime. Contate o administrador.</String>
+        <String Name="DotNetFxRequired">A instalação do Microsoft Report Viewer 2014 Runtime requer o Microsoft .NET Framework 3.5. Contate seu fornecedor de aplicativos.</String>
+        <String Name="WindowsInstallerImproperInstall">Devido a um erro com o Instalador do Windows, a instalação do Microsoft Report Viewer 2014 Runtime não pode prosseguir.</String>
+        <String Name="AnotherInstanceRunning">Outra instância da instalação já está sendo executada. A instância em execução deve ser concluída antes de a instalação continuar.</String>
+        <String Name="BetaProductFailure">Uma versão beta do Microsoft Report Viewer 2014 Runtime foi detectada no computador. Desinstale as versões beta anteriores do Microsoft Report Viewer 2014 Runtime antes de continuar.</String>
+        <String Name="GeneralFailure">Ocorreu uma falha ao tentar instalar o Microsoft Report Viewer 2014 Runtime.</String>
+      	<String Name="ReportViewerMsi">http://go.microsoft.com/fwlink/?LinkID=512191</String>    
+    </Strings>
+
+</Package>
