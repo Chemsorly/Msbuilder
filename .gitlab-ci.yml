@@ -1,3 +1,6 @@
+variables:
+    ASSETCONTAINER_NAME: "msbuilder-assets-$CI_BUILD_REF"
+
 stages:
     - build
 
@@ -6,8 +9,7 @@ build:
   only:
     - master
   script:
-#    - docker login -u %DOCKERIO_USER% -p %DOCKERIO_PASSWORD%
-    - docker build -t chemsorly/msbuilder:latest -f .\dockerfiles\msbuild.Dockerfile .
+    - docker build -t chemsorly/msbuilder:latest -t chemsorly/msbuilder:%PROJECT_VERSION% -f .\dockerfiles\msbuild.Dockerfile .
     - docker push chemsorly/msbuilder:latest
     
 build-vsc:
@@ -15,9 +17,9 @@ build-vsc:
   only:
     - master
   script:
-#    - docker login -u %DOCKERIO_USER% -p %DOCKERIO_PASSWORD%
-    - docker build -t chemsorly/msbuilder:latest-vsc -f .\dockerfiles\msbuild-vsc.Dockerfile .
+    - docker build -t chemsorly/msbuilder:latest-vsc chemsorly/msbuilder:%PROJECT_VERSION%-vsc -f .\dockerfiles\msbuild-vsc.Dockerfile .
     - docker push chemsorly/msbuilder:latest-vsc
 
 after_script:
+    - docker rm %ASSETCONTAINER_NAME% -f
     - powershell docker rmi $(docker images -aq) -f
