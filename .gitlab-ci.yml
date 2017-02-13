@@ -11,6 +11,7 @@ build:
   script:
     - docker build -t chemsorly/msbuilder:latest -t chemsorly/msbuilder:%PROJECT_VERSION% -f .\dockerfiles\msbuild.Dockerfile .
     - docker push chemsorly/msbuilder:latest
+    - docker push chemsorly/msbuilder:%PROJECT_VERSION%
     
 build-vsc:
   stage: build
@@ -19,6 +20,7 @@ build-vsc:
   script:
     - docker build -t chemsorly/msbuilder:latest-vsc -t chemsorly/msbuilder:%PROJECT_VERSION%-vsc -f .\dockerfiles\msbuild-vsc.Dockerfile .
     - docker push chemsorly/msbuilder:latest-vsc
+    - docker push chemsorly/msbuilder:%PROJECT_VERSION%-vsc
 
 after_script:
     - docker rm %ASSETCONTAINER_NAME% -f
