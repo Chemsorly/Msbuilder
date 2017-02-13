@@ -17,7 +17,7 @@ build-vsc:
   only:
     - master
   script:
-    - docker build -t chemsorly/msbuilder:latest-vsc chemsorly/msbuilder:%PROJECT_VERSION%-vsc -f .\dockerfiles\msbuild-vsc.Dockerfile .
+    - docker build -t chemsorly/msbuilder:latest-vsc -t chemsorly/msbuilder:%PROJECT_VERSION%-vsc -f .\dockerfiles\msbuild-vsc.Dockerfile .
     - docker push chemsorly/msbuilder:latest-vsc
 
 after_script:
