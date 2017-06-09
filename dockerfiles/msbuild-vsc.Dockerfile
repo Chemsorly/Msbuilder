@@ -81,6 +81,8 @@ RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Word.dll'
 RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Vbe.Interop.dll' -wait
 RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Vbe.Interop.Forms.dll' -wait
 RUN Start-Process $env:gacutilloc '/i C:/vsto/Office.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/stdole.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Tools.Common.v4.0.Utilities.dll' -wait
 RUN New-Item -ItemType dir 'C:/Program Files (x86)/MSBuild/Microsoft/VisualStudio/v14.0/OfficeTools'
 RUN Copy-Item -Path 'C:/vsto/Microsoft.VisualStudio.Tools.Office.targets' -Destination 'C:/Program Files (x86)/MSBuild/Microsoft/VisualStudio/v14.0/OfficeTools/Microsoft.VisualStudio.Tools.Office.targets'
 RUN Copy-Item -Path 'C:/vsto/Microsoft.VisualStudio.OfficeTools.targets' -Destination 'C:/Program Files (x86)/MSBuild/Microsoft.VisualStudio.OfficeTools.targets'
