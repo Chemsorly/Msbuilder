@@ -4,9 +4,9 @@ MAINTAINER chemso@gmx.de
 # docker push chemsorly/msbuilder
 SHELL ["powershell"]
 
-# Note: Get MSBuild 14 (VS 2015)
-RUN Invoke-WebRequest "https://download.microsoft.com/download/E/E/D/EEDF18A8-4AED-4CE0-BEBE-70A83094FC5A/BuildTools_Full.exe" -OutFile "$env:TEMP\BuildTools_Full.exe" -UseBasicParsing  
-RUN Start-Process "$env:TEMP\BuildTools_Full.exe" '/Silent /Full' -wait
+# Note: Get MSBuild 15 (VS 2017)
+RUN Invoke-WebRequest "https://aka.ms/vs/15/release/vs_buildtools.exe" -OutFile "$env:TEMP\BuildTools_Full.exe" -UseBasicParsing  
+RUN Start-Process "$env:TEMP\BuildTools_Full.exe" '--quiet --all' -wait
 RUN Remove-Item "$env:TEMP\BuildTools_Full.exe"
 
 # Note: Add .NET + ASP.NET runtime
@@ -32,8 +32,10 @@ RUN Start-Process "C:\windows\nuget.exe" 'Install MSBuild.Microsoft.VisualStudio
 RUN mv 'C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\MSBuild.Microsoft.VisualStudio.Web.targets.12.0.4\tools\VSToolsPath\*' 'C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\'  
 # TODO: new webtargets
 
-# Note: Add ClickOnce Bootstrapper files and location to registry for (VS 2015)
+# Note: Add ClickOnce Bootstrapper files and location to registry for (VS 2017)
 COPY Files/Bootstrapper/ C:/Bootstrapper/
+RUN New-Item -Path HKLM:\Software\Wow6432Node\Microsoft\GenericBootstrapper -Name 15.0 -Force
+RUN New-ItemProperty -Path HKLM:\Software\Wow6432Node\Microsoft\GenericBootstrapper\15.0 -Name Path -Value C:\Bootstrapper\ -PropertyType String
 RUN New-Item -Path HKLM:\Software\Wow6432Node\Microsoft\GenericBootstrapper -Name 14.0 -Force
 RUN New-ItemProperty -Path HKLM:\Software\Wow6432Node\Microsoft\GenericBootstrapper\14.0 -Name Path -Value C:\Bootstrapper\ -PropertyType String
 RUN New-Item -Path HKLM:\Software\Wow6432Node\Microsoft\GenericBootstrapper -Name 11.0 -Force
@@ -86,4 +88,4 @@ RUN Copy-Item -Path 'C:/vsto/en' -Destination 'C:/Program Files (x86)/Microsoft 
 RUN Copy-Item -Path 'C:/vsto/product.xml' -Destination 'C:/Program Files (x86)/Microsoft Visual Studio 14.0/SDK/Bootstrapper/Packages/VSTOR40/'
 
 # Note: Add Msbuild to path
-RUN setx PATH '%PATH%;C:\\Program Files (x86)\\MSBuild\\14.0\\Bin\\msbuild.exe'  
+RUN setx PATH '%PATH%;C:\\Program Files (x86)\\MSBuild\\15.0\\Bin\\msbuild.exe'  
