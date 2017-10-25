@@ -4,13 +4,16 @@ MAINTAINER chemso@gmx.de
 # docker push chemsorly/msbuilder
 SHELL ["powershell"]
 
-# Note: Get MSBuild 14 (VS 2015)
-RUN Invoke-WebRequest "https://download.microsoft.com/download/E/E/D/EEDF18A8-4AED-4CE0-BEBE-70A83094FC5A/BuildTools_Full.exe" -OutFile "$env:TEMP\BuildTools_Full.exe" -UseBasicParsing  
-RUN Start-Process "$env:TEMP\BuildTools_Full.exe" '/Silent /Full' -wait
-RUN Remove-Item "$env:TEMP\BuildTools_Full.exe"
+# Note: Get MSBuild 15 (VS 2017)
+RUN Install-WindowsFeature NET-Framework-45-Core
+RUN Invoke-WebRequest "https://aka.ms/vs/15/release/vs_BuildTools.exe" -OutFile vs_BuildTools.exe -UseBasicParsing ; \
+	Start-Process -FilePath 'vs_BuildTools.exe' -ArgumentList '--quiet', '--norestart', '--locale en-US', '--all' -Wait ; \
+	Remove-Item .\vs_BuildTools.exe ; \
+	Remove-Item -Force -Recurse 'C:\Program Files (x86)\Microsoft Visual Studio\Installer'
+RUN setx /M PATH $($Env:PATH + ';' + ${Env:ProgramFiles(x86)} + '\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin')
 
 # Note: Install full VSC installation
-RUN Invoke-WebRequest "https://download.microsoft.com/download/0/B/C/0BC321A4-013F-479C-84E6-4A2F90B11269/vs_community.exe" -OutFile "$env:TEMP\vsc.exe" -UseBasicParsing
+RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/100196707/045b56eb413191d03850ecc425172a7d/vs_Community.exe" -OutFile "$env:TEMP\vsc.exe" -UseBasicParsing
 RUN Start-Process "$env:TEMP\vsc.exe" '/full /q' -wait
 
 # Note: Add .NET + ASP.NET runtime
@@ -38,6 +41,8 @@ RUN mv 'C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\MSBuild.Micr
 
 # Note: Add ClickOnce Bootstrapper files and location to registry for (VS 2015)
 COPY Files/Bootstrapper/ C:/Bootstrapper/
+RUN New-Item -Path HKLM:\Software\Wow6432Node\Microsoft\GenericBootstrapper -Name 15.0 -Force
+RUN New-ItemProperty -Path HKLM:\Software\Wow6432Node\Microsoft\GenericBootstrapper\15.0 -Name Path -Value C:\Bootstrapper\ -PropertyType String
 RUN New-Item -Path HKLM:\Software\Wow6432Node\Microsoft\GenericBootstrapper -Name 14.0 -Force
 RUN New-ItemProperty -Path HKLM:\Software\Wow6432Node\Microsoft\GenericBootstrapper\14.0 -Name Path -Value C:\Bootstrapper\ -PropertyType String
 RUN New-Item -Path HKLM:\Software\Wow6432Node\Microsoft\GenericBootstrapper -Name 11.0 -Force
@@ -81,12 +86,10 @@ RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Word.dll'
 RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Vbe.Interop.dll' -wait
 RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Vbe.Interop.Forms.dll' -wait
 RUN Start-Process $env:gacutilloc '/i C:/vsto/Office.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/stdole.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Tools.Common.v4.0.Utilities.dll' -wait
 RUN New-Item -ItemType dir 'C:/Program Files (x86)/MSBuild/Microsoft/VisualStudio/v14.0/OfficeTools'
 RUN Copy-Item -Path 'C:/vsto/Microsoft.VisualStudio.Tools.Office.targets' -Destination 'C:/Program Files (x86)/MSBuild/Microsoft/VisualStudio/v14.0/OfficeTools/Microsoft.VisualStudio.Tools.Office.targets'
 RUN Copy-Item -Path 'C:/vsto/Microsoft.VisualStudio.OfficeTools.targets' -Destination 'C:/Program Files (x86)/MSBuild/Microsoft.VisualStudio.OfficeTools.targets'
 RUN Copy-Item -Path 'C:/vsto/en' -Destination 'C:/Program Files (x86)/Microsoft Visual Studio 14.0/SDK/Bootstrapper/Packages/VSTOR40/'
 RUN Copy-Item -Path 'C:/vsto/product.xml' -Destination 'C:/Program Files (x86)/Microsoft Visual Studio 14.0/SDK/Bootstrapper/Packages/VSTOR40/'
-
-# Note: Add Msbuild to path
-RUN setx PATH '%PATH%;C:\\Program Files (x86)\\MSBuild\\14.0\\Bin\\msbuild.exe'  
-
