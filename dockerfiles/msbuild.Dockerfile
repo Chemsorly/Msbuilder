@@ -2,12 +2,15 @@ FROM microsoft/windowsservercore
 MAINTAINER chemso@gmx.de 
 
 # docker push chemsorly/msbuilder
-SHELL ["powershell"]
+SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 
 # Note: Get MSBuild 15 (VS 2017)
-RUN Invoke-WebRequest "https://aka.ms/vs/15/release/vs_buildtools.exe" -OutFile "$env:TEMP\BuildTools_Full.exe" -UseBasicParsing  
-RUN Start-Process "$env:TEMP\BuildTools_Full.exe" '--quiet --all' -wait
-RUN Remove-Item "$env:TEMP\BuildTools_Full.exe"
+RUN Install-WindowsFeature NET-Framework-45-Core
+RUN Invoke-WebRequest "https://aka.ms/vs/15/release/vs_BuildTools.exe" -OutFile vs_BuildTools.exe -UseBasicParsing ; \
+	Start-Process -FilePath 'vs_BuildTools.exe' -ArgumentList '--quiet', '--norestart', '--locale en-US' -Wait ; \
+	Remove-Item .\vs_BuildTools.exe ; \
+	Remove-Item -Force -Recurse 'C:\Program Files (x86)\Microsoft Visual Studio\Installer'
+RUN setx /M PATH $($Env:PATH + ';' + ${Env:ProgramFiles(x86)} + '\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin')
 
 # Note: Add .NET + ASP.NET runtime
 RUN Install-WindowsFeature NET-Framework-45-ASPNET
@@ -86,6 +89,3 @@ RUN Copy-Item -Path 'C:/vsto/Microsoft.VisualStudio.Tools.Office.targets' -Desti
 RUN Copy-Item -Path 'C:/vsto/Microsoft.VisualStudio.OfficeTools.targets' -Destination 'C:/Program Files (x86)/MSBuild/Microsoft.VisualStudio.OfficeTools.targets'
 RUN Copy-Item -Path 'C:/vsto/en' -Destination 'C:/Program Files (x86)/Microsoft Visual Studio 14.0/SDK/Bootstrapper/Packages/VSTOR40/'
 RUN Copy-Item -Path 'C:/vsto/product.xml' -Destination 'C:/Program Files (x86)/Microsoft Visual Studio 14.0/SDK/Bootstrapper/Packages/VSTOR40/'
-
-# Note: Add Msbuild to path
-RUN setx PATH '%PATH%;C:\\Program Files (x86)\\MSBuild\\15.0\\Bin\\msbuild.exe'  
