@@ -30,6 +30,11 @@ RUN Invoke-WebRequest "http://download.microsoft.com/download/6/3/B/63BADCE0-F2E
 RUN Start-Process "$env:TEMP\sdksetup2.exe" '/features + /q' -wait
 RUN Remove-Item "$env:TEMP\sdksetup2.exe"
 
+# Node: Add .NET 4.7.1 SDK (Fixes some stuff for .net standard 2.0)
+RUN Invoke-WebRequest "https://download.microsoft.com/download/9/0/1/901B684B-659E-4CBD-BEC8-B3F06967C2E7/NDP471-DevPack-ENU.exe" -OutFile "$env:TEMP\sdksetup3.exe" -UseBasicParsing  
+RUN Start-Process "$env:TEMP\sdksetup3.exe" '/quiet' -wait
+RUN Remove-Item "$env:TEMP\sdksetup3.exe"
+
 # Note: Add NuGet
 RUN Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile "C:\windows\nuget.exe" -UseBasicParsing  
 WORKDIR "C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0"
