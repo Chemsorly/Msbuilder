@@ -18,17 +18,17 @@ RUN Install-WindowsFeature Web-Asp-Net45
 
 # Note: Add .NET 4.5 SDK (Windows 8)
 RUN Invoke-WebRequest "http://download.microsoft.com/download/F/1/3/F1300C9C-A120-4341-90DF-8A52509B23AC/standalonesdk/sdksetup.exe" -OutFile "$env:TEMP\sdksetup.exe" -UseBasicParsing  
-RUN Start-Process "$env:TEMP\sdksetup.exe" '/features + /q' -wait
+RUN Start-Process "$env:TEMP\sdksetup.exe" '/features + /q' -NoNewWindow -Wait
 RUN Remove-Item "$env:TEMP\sdksetup.exe"
 
 # Node: Add .NET 4.6.2 SDK (Windows 10)
 RUN Invoke-WebRequest "http://download.microsoft.com/download/6/3/B/63BADCE0-F2E6-44BD-B2F9-60F5F073038E/standalonesdk/SDKSETUP.EXE" -OutFile "$env:TEMP\sdksetup2.exe" -UseBasicParsing  
-RUN Start-Process "$env:TEMP\sdksetup2.exe" '/features + /q' -wait
+RUN Start-Process "$env:TEMP\sdksetup2.exe" '/features + /q' -NoNewWindow -Wait
 RUN Remove-Item "$env:TEMP\sdksetup2.exe"
 
 # Node: Add .NET 4.7.1 SDK (Fixes some stuff for .net standard 2.0)
 RUN Invoke-WebRequest "https://download.microsoft.com/download/9/0/1/901B684B-659E-4CBD-BEC8-B3F06967C2E7/NDP471-DevPack-ENU.exe" -OutFile "$env:TEMP\sdksetup3.exe" -UseBasicParsing  
-RUN Start-Process "$env:TEMP\sdksetup3.exe" '/quiet' -wait
+RUN Start-Process "$env:TEMP\sdksetup3.exe" '/quiet' -NoNewWindow -Wait
 RUN Remove-Item "$env:TEMP\sdksetup3.exe"
 
 # Note: Add NuGet
@@ -36,7 +36,7 @@ RUN Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.e
 WORKDIR "C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0"
 
 # Note: Install Web Targets
-RUN Start-Process "C:\windows\nuget.exe" 'Install MSBuild.Microsoft.VisualStudio.Web.targets -Version 12.0.4' -wait  
+RUN Start-Process "C:\windows\nuget.exe" 'Install MSBuild.Microsoft.VisualStudio.Web.targets -Version 12.0.4' -NoNewWindow -Wait
 RUN mv 'C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\MSBuild.Microsoft.VisualStudio.Web.targets.12.0.4\tools\VSToolsPath\*' 'C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0\'  
 # TODO: new webtargets
 
@@ -53,42 +53,42 @@ RUN New-ItemProperty -Path HKLM:\Software\Wow6432Node\Microsoft\GenericBootstrap
 
 # Note: Add Office VSTO redist, add dependencies to GAC and add office targets
 RUN Invoke-WebRequest "https://download.microsoft.com/download/F/B/A/FBAB6866-71F8-4A3F-89A4-5BC6AB035C62/vstor_redist.exe" -OutFile "$env:TEMP\vstor_redist.exe" -UseBasicParsing  
-RUN Start-Process "$env:TEMP\vstor_redist.exe" '/q' -wait
+RUN Start-Process "$env:TEMP\vstor_redist.exe" '/q' -NoNewWindow -Wait
 RUN Remove-Item "$env:TEMP\vstor_redist.exe"
 COPY Files/vsto/ C:/vsto/
 
 # Note: Adding stuff to GAC can break it during runtime. Running the image on hyperv seems to be the cause
 ENV gacutilloc="C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0a\bin\NETFX 4.6.2 Tools\gacutil.exe"
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.VisualStudio.Tools.Applications.BuildTasks.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.VisualStudio.Tools.Office.BuildTasks.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.VisualStudio.Tools.Applications.Hosting.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.VisualStudio.Tools.Applications.Hosting.resources.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.InfoPath.Permission.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.interop.access.dao.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Access.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Excel.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Graph.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.InfoPath.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.InfoPath.SemiTrust.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.InfoPath.Xml.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.MSProject.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.OneNote.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Outlook.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.OutlookViewCtl.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.PowerPoint.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Publisher.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.SharePointDesigner.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.SharePointDesignerPage.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.SmartTag.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Visio.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Visio.SaveAsWeb.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.VisOcx.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Word.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Vbe.Interop.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Vbe.Interop.Forms.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Office.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/stdole.dll' -wait
-RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Tools.Common.v4.0.Utilities.dll' -wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.VisualStudio.Tools.Applications.BuildTasks.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.VisualStudio.Tools.Office.BuildTasks.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.VisualStudio.Tools.Applications.Hosting.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.VisualStudio.Tools.Applications.Hosting.resources.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.InfoPath.Permission.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.interop.access.dao.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Access.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Excel.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Graph.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.InfoPath.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.InfoPath.SemiTrust.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.InfoPath.Xml.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.MSProject.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.OneNote.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Outlook.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.OutlookViewCtl.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.PowerPoint.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Publisher.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.SharePointDesigner.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.SharePointDesignerPage.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.SmartTag.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Visio.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Visio.SaveAsWeb.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.VisOcx.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Interop.Word.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Vbe.Interop.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Vbe.Interop.Forms.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Office.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/stdole.dll' -NoNewWindow -Wait
+RUN Start-Process $env:gacutilloc '/i C:/vsto/Microsoft.Office.Tools.Common.v4.0.Utilities.dll' -NoNewWindow -Wait
 RUN New-Item -ItemType dir 'C:/Program Files (x86)/MSBuild/Microsoft/VisualStudio/v14.0/OfficeTools'
 RUN Copy-Item -Path 'C:/vsto/Microsoft.VisualStudio.Tools.Office.targets' -Destination 'C:/Program Files (x86)/MSBuild/Microsoft/VisualStudio/v14.0/OfficeTools/Microsoft.VisualStudio.Tools.Office.targets'
 RUN Copy-Item -Path 'C:/vsto/Microsoft.VisualStudio.OfficeTools.targets' -Destination 'C:/Program Files (x86)/MSBuild/Microsoft.VisualStudio.OfficeTools.targets'
