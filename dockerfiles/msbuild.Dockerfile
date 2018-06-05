@@ -21,15 +21,21 @@ RUN Invoke-WebRequest "http://download.microsoft.com/download/F/1/3/F1300C9C-A12
 RUN Start-Process "$env:TEMP\sdksetup.exe" '/features + /q' -NoNewWindow -Wait
 RUN Remove-Item "$env:TEMP\sdksetup.exe"
 
-# Node: Add .NET 4.6.2 SDK (Windows 10)
+# Note: Add .NET 4.6.2 SDK (Windows 10)
 RUN Invoke-WebRequest "http://download.microsoft.com/download/6/3/B/63BADCE0-F2E6-44BD-B2F9-60F5F073038E/standalonesdk/SDKSETUP.EXE" -OutFile "$env:TEMP\sdksetup2.exe" -UseBasicParsing  
 RUN Start-Process "$env:TEMP\sdksetup2.exe" '/features + /q' -NoNewWindow -Wait
 RUN Remove-Item "$env:TEMP\sdksetup2.exe"
 
-# Node: Add .NET 4.7.1 SDK (Fixes some stuff for .net standard 2.0)
+# Note: Add .NET 4.7.1 SDK (Fixes some stuff for .net standard 2.0)
 RUN Invoke-WebRequest "https://download.microsoft.com/download/9/0/1/901B684B-659E-4CBD-BEC8-B3F06967C2E7/NDP471-DevPack-ENU.exe" -OutFile "$env:TEMP\sdksetup3.exe" -UseBasicParsing  
 RUN Start-Process "$env:TEMP\sdksetup3.exe" '/quiet' -NoNewWindow -Wait
 RUN Remove-Item "$env:TEMP\sdksetup3.exe"
+
+# Note: Add .NET Core 2.0 SDK
+RUN Invoke-WebRequest https://download.microsoft.com/download/3/7/1/37189942-C91D-46E9-907B-CF2B2DE584C7/dotnet-sdk-2.1.200-win-x64.zip -OutFile dotnet.zip
+RUN Expand-Archive dotnet.zip -DestinationPath $Env:ProgramFiles\dotnet
+RUN Remove-Item -Force dotnet.zip
+RUN setx /M PATH $($Env:PATH + ';' + $Env:ProgramFiles + '\dotnet')
 
 # Note: Add NuGet
 RUN Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile "C:\windows\nuget.exe" -UseBasicParsing  
