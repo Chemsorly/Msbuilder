@@ -6,7 +6,7 @@ SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPref
 
 # Note: Get MSBuild 15 (VS 2017)
 RUN Install-WindowsFeature NET-Framework-45-Core
-RUN Invoke-WebRequest "https://aka.ms/vs/15/release/vs_BuildTools.exe" -OutFile vs_BuildTools.exe -UseBasicParsing ; \
+RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/e84023e5-c5ed-484d-8065-d8cfc540dff9/f544674f586f98cbc3741ee7c22541f3/vs_buildtools.exe" -OutFile vs_BuildTools.exe -UseBasicParsing ; \
 	Start-Process -FilePath 'vs_BuildTools.exe' -ArgumentList '--quiet', '--norestart', '--locale en-US', '--all' -Wait ; \
 	Remove-Item .\vs_BuildTools.exe ; \
 	Remove-Item -Force -Recurse 'C:\Program Files (x86)\Microsoft Visual Studio\Installer'

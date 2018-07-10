@@ -6,14 +6,14 @@ SHELL ["powershell"]
 
 # Note: Get MSBuild 15 (VS 2017)
 RUN Install-WindowsFeature NET-Framework-45-Core
-RUN Invoke-WebRequest "https://aka.ms/vs/15/release/vs_BuildTools.exe" -OutFile vs_BuildTools.exe -UseBasicParsing ; \
+RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/e84023e5-c5ed-484d-8065-d8cfc540dff9/f544674f586f98cbc3741ee7c22541f3/vs_buildtools.exe" -OutFile vs_BuildTools.exe -UseBasicParsing ; \
 	Start-Process -FilePath 'vs_BuildTools.exe' -ArgumentList '--quiet', '--norestart', '--locale en-US', '--all' -Wait ; \
 	Remove-Item .\vs_BuildTools.exe ; \
 	Remove-Item -Force -Recurse 'C:\Program Files (x86)\Microsoft Visual Studio\Installer'
 RUN setx /M PATH $($Env:PATH + ';' + ${Env:ProgramFiles(x86)} + '\Microsoft Visual Studio\2017\BuildTools\MSBuild\15.0\Bin')
 
 # Note: Install full VSC installation
-RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/100196707/045b56eb413191d03850ecc425172a7d/vs_Community.exe" -OutFile "$env:TEMP\vsc.exe" -UseBasicParsing
+RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/71abe122-a155-4bef-a8af-567a9cda0194/67c9a5a506ad3c62739105232a47889f/vs_community.exe" -OutFile "$env:TEMP\vsc.exe" -UseBasicParsing
 RUN Start-Process "$env:TEMP\vsc.exe" '/full /q' -NoNewWindow -Wait
 
 # Note: Add .NET + ASP.NET runtime
