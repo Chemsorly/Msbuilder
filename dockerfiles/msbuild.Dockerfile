@@ -46,6 +46,11 @@ RUN Invoke-WebRequest "https://download.microsoft.com/download/8/8/5/88544F33-83
 RUN Start-Process "$env:TEMP\sdksetup6.exe" '/quiet' -NoNewWindow -Wait
 RUN Remove-Item "$env:TEMP\sdksetup6.exe"
 
+# Note: Add .NET Core 2.2 SDK
+RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/3c43f486-2799-4454-851c-fa7a9fb73633/673099a9fe6f1cac62dd68da37ddbc1a/dotnet-sdk-2.2.203-win-x64.exe" -OutFile "$env:TEMP\sdksetup7.exe" -UseBasicParsing  
+RUN Start-Process "$env:TEMP\sdksetup7.exe" '/quiet' -NoNewWindow -Wait
+RUN Remove-Item "$env:TEMP\sdksetup7.exe"
+
 # Note: Add NuGet
 RUN Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile "C:\windows\nuget.exe" -UseBasicParsing  
 WORKDIR "C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0"
