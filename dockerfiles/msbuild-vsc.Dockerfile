@@ -35,6 +35,26 @@ RUN Invoke-WebRequest "https://download.microsoft.com/download/9/0/1/901B684B-65
 RUN Start-Process "$env:TEMP\sdksetup3.exe" '/quiet' -NoNewWindow -Wait
 RUN Remove-Item "$env:TEMP\sdksetup3.exe"
 
+# Note: Add .NET Core 1.1 SDK
+RUN Invoke-WebRequest "https://download.microsoft.com/download/4/0/2/4022CFC7-5061-4762-B9BA-48B35632572D/dotnet-dev-win-x64.1.1.9.exe" -OutFile "$env:TEMP\sdksetup4.exe" -UseBasicParsing  
+RUN Start-Process "$env:TEMP\sdksetup4.exe" '/quiet' -NoNewWindow -Wait
+RUN Remove-Item "$env:TEMP\sdksetup4.exe"
+
+# Note: Add .NET Core 2.0 SDK
+RUN Invoke-WebRequest "https://download.microsoft.com/download/3/7/1/37189942-C91D-46E9-907B-CF2B2DE584C7/dotnet-sdk-2.1.200-win-x64.exe" -OutFile "$env:TEMP\sdksetup5.exe" -UseBasicParsing  
+RUN Start-Process "$env:TEMP\sdksetup5.exe" '/quiet' -NoNewWindow -Wait
+RUN Remove-Item "$env:TEMP\sdksetup5.exe"
+
+# Note: Add .NET Core 2.1 SDK
+RUN Invoke-WebRequest "https://download.microsoft.com/download/8/8/5/88544F33-836A-49A5-8B67-451C24709A8F/dotnet-sdk-2.1.300-win-x64.exe" -OutFile "$env:TEMP\sdksetup6.exe" -UseBasicParsing  
+RUN Start-Process "$env:TEMP\sdksetup6.exe" '/quiet' -NoNewWindow -Wait
+RUN Remove-Item "$env:TEMP\sdksetup6.exe"
+
+# Note: Add .NET Core 2.2 SDK
+RUN Invoke-WebRequest "https://download.visualstudio.microsoft.com/download/pr/3c43f486-2799-4454-851c-fa7a9fb73633/673099a9fe6f1cac62dd68da37ddbc1a/dotnet-sdk-2.2.203-win-x64.exe" -OutFile "$env:TEMP\sdksetup7.exe" -UseBasicParsing  
+RUN Start-Process "$env:TEMP\sdksetup7.exe" '/quiet' -NoNewWindow -Wait
+RUN Remove-Item "$env:TEMP\sdksetup7.exe"
+
 # Note: Add NuGet
 RUN Invoke-WebRequest "https://dist.nuget.org/win-x86-commandline/latest/nuget.exe" -OutFile "C:\windows\nuget.exe" -UseBasicParsing  
 WORKDIR "C:\Program Files (x86)\MSBuild\Microsoft\VisualStudio\v12.0"
